@@ -58,7 +58,7 @@ class Game {
 
 		void add(int pos, char sym) {
 			GameBoard[pos-1] = sym;
-		}		
+		}
 
 		void display() {
 			system("CLS");
@@ -91,6 +91,11 @@ class Game {
 				return 1;
 			else 
 				return 0;
+		}
+
+		void reset() {
+			for (int i=0; i<9; ++i)
+				GameBoard[i]='-';
 		}
 }G;
 
@@ -133,9 +138,6 @@ void play() {
 	for (int i=0; i<9; i++) {
 		G.display();
 
-		flag_X = G.check_winner('X');
-		flag_O = G.check_winner('O');
-
 		if (flag_X || flag_O)
 			break;
 		
@@ -163,6 +165,9 @@ void play() {
 				continue;
 			}
 		}
+
+		flag_X = G.check_winner('X');
+		flag_O = G.check_winner('O');
 	}
 
 	if(flag_X) {
@@ -177,14 +182,10 @@ void play() {
 
 void show_scoreboard() {
 	cout<<endl;
-	cout<<"PLAYER 1"<<endl;
-	cout<<p1.getname()<<endl;
-	cout<<"Score: "<<p1.getScore()<<endl;
+	cout<<p1.getname()<<"'s Score: "<<p1.getScore()<<endl;
 
 	cout<<endl;
-	cout<<"PLAYER 2"<<endl;
-	cout<<p2.getname()<<endl;
-	cout<<"Score: "<<p2.getScore()<<endl;
+	cout<<p2.getname()<<"'s Score: "<<p2.getScore()<<endl<<endl;
 }
 
 int main() {
@@ -203,7 +204,7 @@ int main() {
 			do {
 				system("CLS");
 				play();
-				reset();
+				G.reset();
 				cout<<"Play again?(Y/N) ...";
 				cin>>ex;
 			} while(ex!='N');
