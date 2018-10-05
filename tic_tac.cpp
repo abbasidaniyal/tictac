@@ -1,6 +1,7 @@
 #include <iostream>
 #include <conio.h>
 #include <string.h>
+#include <unistd.h>
 
 using namespace std;
 
@@ -64,37 +65,20 @@ class game
 		void display()
 		{
 			int i;
+			cout<<endl<<endl;
+
 			for (i = 0; i < 9 ; ++i)
 			{
-				cout<<arr[i];
+				cout<<arr[i]<<"\t";
 				
 				if ( (i+1)%3==0)
-					cout<<endl;
+					cout<<endl<<endl;
 
 			}
 		}
 
 
 
-
-		void check_game()
-		{
-
-			int flag=0;
-			int i;
-			for (i = 0; i < 9; ++i)
-			{
-				if (arr[i]=='-')
-					flag++;
-			}
-
-			if (flag==0)
-			{
-				cout<<"\n Game Over!";
-
-			}
-
-		}
 
 
 		int check_winner(char ch)
@@ -140,8 +124,8 @@ void createplayer()
 	static int n=1;
 	string name;
 
-	cout<<"\n\nEnter Name\n"; 
-	// getline(cin, name);
+	cout<<"\n\nEnter Name - "; 
+
 	cin>>name;
 
 	if (n==1)
@@ -167,7 +151,7 @@ void createplayer()
 
 void signup()
 {
-	//system("cls");
+	system("cls");
 	cout<<"\n\nEnter PLayer 1 details";
 	createplayer();
 
@@ -187,9 +171,10 @@ void play()
 
 	int check=0;
 
-	for (i = 0; i < 9; ++i)
+	for (i = 0; i < 10; ++i)
 	{
-		//system("cls");
+		system("cls");
+
 		G.display();
 
 
@@ -200,16 +185,15 @@ void play()
 
 
 
-		if (flag_X || flag_O)
+		if (flag_X || flag_O || i==10)
 			break ;
 
 
-		G.check_game();
 		
 
 		if (i%2==0)
 		{
-			cout<<p1.getname()<<" Enter box no :- ";
+			cout<<p1.getname()<<" enter box no :- ";
 			cin>>no;
 			check=G.check_pos(no);
 			if (check==1)
@@ -218,14 +202,24 @@ void play()
 			{
 				cout<<"Invalid Input"<<endl;
 				i--;
+				sleep(3);
 				continue ;
 			}
 		}
 		else
 		{
-			cout<<p2.getname()<<" Enter box no :- ";
+			cout<<p2.getname()<<" enter box no :- ";
 			cin>>no;
-			G.add(no,'O');
+			check=G.check_pos(no);
+			if (check==1)
+				G.add(no,'O');
+			else
+			{
+				cout<<"Invalid Input"<<endl;
+				i--;
+				sleep(3);
+				continue ;
+			}
 		}
 
 	}
@@ -256,11 +250,11 @@ int main()
 {
 	int choice;
 
-	// system("cls");
+	system("cls");
 
 	cout<<"\n\t\tTIC TAC";
 
-	cout<<"\n\n1. Play \n\n2. Exit\n";
+	cout<<"\n\n1. Play \n\n2. Exit\n\nChoice :- ";
 
 	cin>>choice;
 
@@ -268,7 +262,7 @@ int main()
 	{
 		case 1: play();break;
 		case 2: return 0 ;
-		default: cout<<"Invalid"; main();
+		default: cout<<"Invalid"; sleep(4);main();
 	}
 
 
