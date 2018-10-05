@@ -170,6 +170,8 @@ void play() {
 		flag_O = G.check_winner('O');
 	}
 
+	G.display();
+	
 	if(flag_X) {
 		cout<<"WINNER : X"<<"\nCongratulations "<<p1.getname()<<endl<<endl;
 		p1.register_win();
