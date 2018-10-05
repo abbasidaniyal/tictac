@@ -248,7 +248,7 @@ int main()
 	cout<<"1. Play"<<endl;
 	cout<<"2. Exit"<<endl;
 
-	cout<<"Choice - "
+	cout<<"Choice - ";
 	cin>>choice;
 
 	switch(choice) 
