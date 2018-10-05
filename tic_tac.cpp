@@ -47,7 +47,7 @@ class Player
     	{
 			return score;
 		}
-}p1, p2;
+}p1, p2, ptemp;
 
 
 
@@ -161,6 +161,7 @@ void signup()
 	createplayer(2);
 
 	cout<<endl<<"Sign up complete! Press any key to continue.";
+	getch();
 
 }
 
@@ -188,6 +189,7 @@ void play()
 			else 
      		{
 				cout<<"Invalid Input"<<endl;
+				sleep(2);
 				--i;
 				continue;
 			}
@@ -235,6 +237,8 @@ void show_scoreboard()
 
 	cout<<endl;
 	cout<<p2.getname()<<"'s Score: "<<p2.getScore()<<endl<<endl;
+
+	getch();
 }
 
 int main() 
@@ -260,6 +264,11 @@ int main()
 				system("CLS");
 				play();
 				G.reset();
+				{
+					ptemp=p1;
+					p1=p2;
+					p2=ptemp;
+				}
 				cout<<"Play again?(Y/N) ...";
 				cin>>ex;
 
