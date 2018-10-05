@@ -154,10 +154,10 @@ void createplayer(int n)
 void signup()
 {
 	system("CLS");
-	cout<<"\n\nEnter PLayer 1 details";
+	cout<<"\n\nEnter Player 1 details";
 	createplayer(1);
 
-	cout<<"\n\nEnter PLayer 2 details";
+	cout<<"\n\nEnter Player 2 details";
 	createplayer(2);
 
 	cout<<endl<<"Sign up complete! Press any key to continue.";
@@ -180,7 +180,7 @@ void play()
 		
 		if (i%2==0) 
    		{
-			cout<<p1.getname()<<" Enter box number :- ";
+			cout<<p1.getname()<<" enter box number :- ";
 			cin>>box_number;
 			
 			if (G.check_pos(box_number))
@@ -194,7 +194,7 @@ void play()
 		}
 		else 
 	    {
-			cout<<p2.getname()<<" Enter box number :- ";
+			cout<<p2.getname()<<" enter box number :- ";
 			cin>>box_number;
 			
 			if (G.check_pos(box_number))
