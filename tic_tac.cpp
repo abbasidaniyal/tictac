@@ -1,270 +1,274 @@
 #include <iostream>
+#include <stdlib.h>
 #include <conio.h>
 #include <string.h>
 #include <unistd.h>
 
 using namespace std;
 
-class player
+class Player 
 {
-		string name;
-		char sym;
-	
-	public :
-		void putname(string NAME)
-		{
+	string name;
+	char sym;
+	int score;
+
+	public:
+		Player() 
+	    {
+			score = 0;
+		}
+
+		void putname(string NAME) 
+    	{
 			name=NAME;
 		}
 
-		void putsym(char ch)
-		{
+		void putsym(char ch) 
+    	{
 			sym=ch;
-
 		}
-		string getname()
-		{
+
+		string getname() 
+    	{
 			return name;
 		}
 
-		char getsym()
-		{
+		char getsym() 
+    	{
 			return sym;
 		}
 
+		void register_win() 
+	    {
+			score++;
+		}
 
-}p1,p2;
+		int getScore() 
+    	{
+			return score;
+		}
+}p1, p2;
 
-class game
+
+
+
+class Game 
 {
-		char arr[10];
+	char GameBoard[9];
 
-	public :
 
-		game()
-		{	
-			int i;
-			for ( i = 0; i < 9; ++i)
-			{
-				arr[i]='-';
-			}
+	public:
+		Game() 
+		{
+			for (int i=0; i<9; ++i)
+				GameBoard[i]='-';
 		}
 
-		int check_pos(int pos)
+		bool check_pos(int pos) 
 		{
-			if (arr[pos-1]=='-')
-				return 1;
-			else return 0;
+			if (GameBoard[pos-1]=='-')
+				return true;
+			else
+				return false;
 		}
 
-		void add(int pos,char sym)
+		void add(int pos, char sym) 
 		{
-			arr[pos-1]=sym;
-		}		
+			GameBoard[pos-1] = sym;
+		}
 
-
-		void display()
+		void display() 
 		{
-			int i;
-			cout<<endl<<endl;
-
-			for (i = 0; i < 9 ; ++i)
-			{
-				cout<<arr[i]<<"\t";
-				
-				if ( (i+1)%3==0)
+			system("CLS");
+			cout<<endl;
+			cout<<"\n\t\tTIC TAC TOE"<<endl<<endl;
+			for (int i=0; i<9 ; ++i) 
+     		{
+				cout<<'\t'<<GameBoard[i];
+				if ((i+1)%3==0)
 					cout<<endl<<endl;
-
 			}
+			cout<<endl;
 		}
 
+		int check_winner(char ch) 
+    	{
 
-
-
-
-		int check_winner(char ch)
-		{
 
 			int flag=0;
-			int i;
-			for (i = 0; i <7 ; i+=3)
-			{
-				if (arr[i]==ch && arr[i+1]==ch && arr[i+2]==ch)
+			for (int i=0; i<7 ; i+=3) 
+      		{
+				if (GameBoard[i]==ch && GameBoard[i+1]==ch && GameBoard[i+2]==ch)
 					flag++;
 			}
 
-			for (i = 0; i <3 ; i++)
-			{
-				if (arr[i]==ch && arr[i+3]==ch && arr[i+6]==ch)
+			for (int i=0; i<3 ; i++) 
+     		{
+				if (GameBoard[i]==ch && GameBoard[i+3]==ch && GameBoard[i+6]==ch)
 					flag++;
 			}
 	
-			if  ((arr[0]==ch && arr[4]==ch && arr[8]==ch)||(arr[2]==ch && arr[4]==ch && arr[6]==ch))
+			if ((GameBoard[0]==ch && GameBoard[4]==ch && GameBoard[8]==ch)||(GameBoard[2]==ch && GameBoard[4]==ch && GameBoard[6]==ch))
 				flag++;
 
-
 			if (flag==1)
-			{
 				return 1;
-			}
-			else return 0;
+			else 
+				return 0;
 		}
 
-
-
-
+		void reset() 
+	    {
+			for (int i=0; i<9; ++i)
+				GameBoard[i]='-';
+		}
 }G;
 
 
 
-
-
-
-void createplayer()
+void createplayer(int n) 
 {
-	static int n=1;
 	string name;
-
+  
 	cout<<"\n\nEnter Name - "; 
 
 	cin>>name;
 
-	if (n==1)
+	if (n==1) 
 	{
 		p1.putname(name);
 		p1.putsym('X');
-		n++;
-		cout<<"\nYour symbol is X"<<endl;
-		return ;
-	}
+		cout<<endl<<"Your symbol is X"<<endl;
 
-	if (n==2)
-	{
+	} 
+	else if (n==2) 
+  	{
 		p2.putname(name);
 		p2.putsym('O');
-		cout<<"\nYour symbol is O"<<endl;
-		return ;
+		cout<<endl<<"Your symbol is O"<<endl;
+		
 	}
-
-
-
 }
+
 
 void signup()
 {
-	system("cls");
+	system("CLS");
 	cout<<"\n\nEnter PLayer 1 details";
-	createplayer();
+	createplayer(1);
 
 	cout<<"\n\nEnter PLayer 2 details";
-	createplayer();
+	createplayer(2);
+
+	cout<<endl<<"Sign up complete! Press any key to continue.";
+
 }
 
 
-void play()
-{
-	signup();
-		
+void play() 
+{		
+	int box_number;
 	int flag_X = 0, flag_O = 0;
 
-	int i,no;
 
-
-	int check=0;
-
-	for (i = 0; i < 10; ++i)
-	{
-		system("cls");
-
+	for (int i=0; i<9; i++) 
+  	{
 		G.display();
 
-
-		flag_X=G.check_winner('X');	
-
-
-		flag_O=G.check_winner('O');
-
-
-
-		if (flag_X || flag_O || i==10)
-			break ;
-
-
+		if (flag_X || flag_O )
+			break;
 		
-
-		if (i%2==0)
-		{
-			cout<<p1.getname()<<" enter box no :- ";
-			cin>>no;
-			check=G.check_pos(no);
-			if (check==1)
-				G.add(no,'X');
-			else
-			{
+		if (i%2==0) 
+   		{
+			cout<<p1.getname()<<" Enter box number :- ";
+			cin>>box_number;
+			
+			if (G.check_pos(box_number))
+				G.add(box_number,'X');
+			else 
+     		{
 				cout<<"Invalid Input"<<endl;
-				i--;
-				sleep(3);
-				continue ;
+				--i;
+				continue;
 			}
 		}
-		else
-		{
-			cout<<p2.getname()<<" enter box no :- ";
-			cin>>no;
-			check=G.check_pos(no);
-			if (check==1)
-				G.add(no,'O');
-			else
-			{
+		else 
+	    {
+			cout<<p2.getname()<<" Enter box number :- ";
+			cin>>box_number;
+			
+			if (G.check_pos(box_number))
+				G.add(box_number,'O');
+			else 
+    		{
 				cout<<"Invalid Input"<<endl;
-				i--;
-				sleep(3);
-				continue ;
+       			sleep(2);
+				--i;
+				continue;
 			}
 		}
 
+		flag_X = G.check_winner('X');
+		flag_O = G.check_winner('O');
 	}
 
-
-	if(flag_O) 
-	{
-		cout<<"WINNER : O"<<endl;
-	}
-	else if(flag_X) 
-	{
-		cout<<"WINNER : X"<<endl;
-	}
-	else 
-	{
-		cout<<"DRAW"<<endl;
-	}
-
-
+	G.display();
+	
+	if(flag_X) 
+  	{
+		cout<<"WINNER : X"<<"\nCongratulations "<<p1.getname()<<endl<<endl;
+		p1.register_win();
+	} 
+  	else if(flag_O) 
+  	{
+		cout<<"WINNER : O"<<"\nCongratulations "<<p2.getname()<<endl<<endl;
+		p2.register_win();
+	} 
+	else
+		cout<<"\nMATCH DRAW\n"<<endl;
 }
 
+void show_scoreboard() 
+{
+	cout<<endl;
+	cout<<p1.getname()<<"'s Score: "<<p1.getScore()<<endl;
 
+	cout<<endl;
+	cout<<p2.getname()<<"'s Score: "<<p2.getScore()<<endl<<endl;
+}
 
-
-
-
-int main()
+int main() 
 {
 	int choice;
+	char ex = 'N';
+  	system("cls");
 
-	system("cls");
 
-	cout<<"\n\t\tTIC TAC";
+	cout<<"\n\t\tTIC TAC TOE"<<endl;
+	cout<<"1. Play"<<endl;
+	cout<<"2. Exit"<<endl;
 
-	cout<<"\n\n1. Play \n\n2. Exit\n\nChoice :- ";
-
+	cout<<"Choice - "
 	cin>>choice;
 
-	switch(choice)
+	switch(choice) 
 	{
-		case 1: play();break;
-		case 2: return 0 ;
-		default: cout<<"Invalid"; sleep(4);main();
+		case 1: 
+			signup();
+			do 
+			{
+				system("CLS");
+				play();
+				G.reset();
+				cout<<"Play again?(Y/N) ...";
+				cin>>ex;
+
+			} while(ex!='N');
+			show_scoreboard();
+			break;
+		case 2: return 0;
+		default: cout<<"Invalid";sleep(2); main();
+
 	}
-
-
 	return 0;
 }
