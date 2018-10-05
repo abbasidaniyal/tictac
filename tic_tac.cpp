@@ -81,7 +81,7 @@ class Game
 		{
 			system("CLS");
 			cout<<endl;
-			cout<<"\n\t\tTIC TAC TOE"<<endl<<endl;
+			cout<<"\n\t   TIC TAC TOE"<<endl<<endl;
 			for (int i=0; i<9 ; ++i) 
      		{
 				cout<<'\t'<<GameBoard[i];
