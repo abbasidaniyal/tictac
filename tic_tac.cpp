@@ -3,8 +3,14 @@
 #include <conio.h>
 #include <string.h>
 #include <unistd.h>
+#include <vector>
+
+
 
 using namespace std;
+
+
+
 
 class Player 
 {
@@ -16,6 +22,7 @@ class Player
 		Player() 
 	    {
 			score = 0;
+			name="Bot";
 		}
 
 		void putname(string NAME) 
@@ -52,6 +59,46 @@ class Player
 
 
 
+
+
+class bot
+{
+	char sym;
+	int score;
+
+	public:
+		bot()
+		{
+			sym='O';
+			score=0;
+		}
+
+
+		
+		void putsym(char ch) 
+    	{
+			sym=ch;
+		}
+
+		
+		char getsym() 
+    	{
+			return sym;
+		}
+
+		void register_win() 
+	    {
+			score++;
+		}
+
+		int getScore() 
+    	{
+			return score;
+		}
+
+}b;
+
+
 class Game 
 {
 	char GameBoard[9];
@@ -70,6 +117,11 @@ class Game
 				return true;
 			else
 				return false;
+		}
+
+		char check_ele(int pos)
+		{
+			return GameBoard[pos-1];
 		}
 
 		void add(int pos, char sym) 
@@ -126,6 +178,54 @@ class Game
 
 
 
+int calculatebot()
+{
+
+	int box_number;
+	
+	std::vector<int> free, occupied;
+
+
+	for (int i = 0; i < 9; ++i)
+	{
+		if (G.check_pos((i+1)))
+		{
+			free.push_back(i+1);
+		}
+	}
+
+
+
+	for (int i = 0; i < 9; ++i)
+	{
+		if (!G.check_pos((i+1)))
+		{
+			occupied.push_back(i+1);
+		}
+	}
+
+
+
+	if (occupied[0] && pos ==2)
+	{
+		/* code */
+	}
+
+
+
+
+
+
+
+	box_number= NULL;
+
+
+	return box_number;
+
+
+}
+
+
 void createplayer(int n) 
 {
 	string name;
@@ -164,6 +264,88 @@ void signup()
 	getch();
 
 }
+
+
+
+
+void playmulti()
+{
+
+
+	int box_number;
+	int flag_X = 0, flag_O = 0;
+
+
+	for (int i=0; i<9; i++) 
+  	{
+		G.display();
+
+		if (flag_X || flag_O )
+			break;
+		
+		if (i%2==0) 
+   		{
+			cout<<p1.getname()<<" enter box number :- ";
+			cin>>box_number;
+			
+			if (G.check_pos(box_number))
+				G.add(box_number,'X');
+			else 
+     		{
+				cout<<"Invalid Input"<<endl;
+				sleep(2);
+				--i;
+				continue;
+			}
+		}
+		else 
+	    {
+			
+	    	box_number=calculatebot();
+	    	G.add(box_number, 'O');
+
+
+		}
+
+		flag_X = G.check_winner('X');
+		flag_O = G.check_winner('O');
+	}
+
+	G.display();
+	
+	if(flag_X) 
+  	{
+		cout<<"WINNER : X"<<"\nCongratulations "<<p1.getname()<<endl<<endl;
+		p1.register_win();
+	} 
+  	else if(flag_O) 
+  	{
+		cout<<"WINNER : O"<<"\nCongratulations "<<p2.getname()<<endl<<endl;
+		p2.register_win();
+	} 
+	else
+		cout<<"\nMATCH DRAW\n"<<endl;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
 
 
 void play() 
@@ -249,8 +431,9 @@ int main()
 
 
 	cout<<"\n\t\tTIC TAC TOE"<<endl;
-	cout<<"1. Play"<<endl;
-	cout<<"2. Exit"<<endl;
+	cout<<"1. Play with Friend"<<endl;
+	cout<<"2. Play with Bot"<<endl;
+	cout<<"3. Exit"<<endl;
 
 	cout<<"Choice - ";
 	cin>>choice;
@@ -275,9 +458,19 @@ int main()
 			} while(ex!='N');
 			show_scoreboard();
 			break;
-		case 2: return 0;
-		default: cout<<"Invalid";sleep(2); main();
 
+		case 2: 
+			{	
+				system("CLS");
+				cout<<"\n\nEnter Player details";
+				createplayer(1);
+				playmulti();
+			}
+				
+		case 3: return 0;
+		default: cout<<"Invalid";sleep(2); main();
 	}
+
+	
 	return 0;
 }
