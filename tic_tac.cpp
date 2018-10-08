@@ -206,10 +206,10 @@ int calculatebot()
 
 
 
-	if (occupied[0] && pos ==2)
-	{
-		/* code */
-	}
+	// if (occupied[0] && pos ==2)
+	// {
+	// 	/* code */
+	// }
 
 
 
